@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.env
+.env.local
+.runtime/
+docs/report-review/
+firmware/SmartRoom/config.h

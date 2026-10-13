@@ -1,0 +1,2215 @@
+{
+  "version": 1,
+  "referenceTime": "2026-10-03T08:00:00.000Z",
+  "login": {
+    "username": "admin@iot.com",
+    "password": "demo123"
+  },
+  "user": {
+    "id": 1,
+    "username": "admin@iot.com",
+    "fullName": "Lê Xuân Cường",
+    "studentId": "B23DCCN111",
+    "className": "D23CNPM06"
+  },
+  "sensors": [
+    {
+      "id": 1,
+      "name": "Air Temperature",
+      "type": "temperature",
+      "unit": "°C"
+    },
+    {
+      "id": 2,
+      "name": "Relative Humidity",
+      "type": "humidity",
+      "unit": "%"
+    },
+    {
+      "id": 3,
+      "name": "Ambient Light",
+      "type": "light",
+      "unit": "lux"
+    }
+  ],
+  "readings": [
+    {
+      "id": 1,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.8,
+      "unit": "°C",
+      "timestamp": "2026-10-02T08:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 55,
+      "unit": "%",
+      "timestamp": "2026-10-02T08:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 360,
+      "unit": "lux",
+      "timestamp": "2026-10-02T08:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.6,
+      "unit": "°C",
+      "timestamp": "2026-10-02T08:18:00.000Z"
+    },
+    {
+      "id": 5,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 55.5,
+      "unit": "%",
+      "timestamp": "2026-10-02T08:18:00.000Z"
+    },
+    {
+      "id": 6,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 364,
+      "unit": "lux",
+      "timestamp": "2026-10-02T08:18:00.000Z"
+    },
+    {
+      "id": 7,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.4,
+      "unit": "°C",
+      "timestamp": "2026-10-02T08:36:00.000Z"
+    },
+    {
+      "id": 8,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 55.9,
+      "unit": "%",
+      "timestamp": "2026-10-02T08:36:00.000Z"
+    },
+    {
+      "id": 9,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 368,
+      "unit": "lux",
+      "timestamp": "2026-10-02T08:36:00.000Z"
+    },
+    {
+      "id": 10,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.1,
+      "unit": "°C",
+      "timestamp": "2026-10-02T08:54:00.000Z"
+    },
+    {
+      "id": 11,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 56.3,
+      "unit": "%",
+      "timestamp": "2026-10-02T08:54:00.000Z"
+    },
+    {
+      "id": 12,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 371,
+      "unit": "lux",
+      "timestamp": "2026-10-02T08:54:00.000Z"
+    },
+    {
+      "id": 13,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 27.9,
+      "unit": "°C",
+      "timestamp": "2026-10-02T09:12:00.000Z"
+    },
+    {
+      "id": 14,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 56.8,
+      "unit": "%",
+      "timestamp": "2026-10-02T09:12:00.000Z"
+    },
+    {
+      "id": 15,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 375,
+      "unit": "lux",
+      "timestamp": "2026-10-02T09:12:00.000Z"
+    },
+    {
+      "id": 16,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 27.7,
+      "unit": "°C",
+      "timestamp": "2026-10-02T09:30:00.000Z"
+    },
+    {
+      "id": 17,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 57.3,
+      "unit": "%",
+      "timestamp": "2026-10-02T09:30:00.000Z"
+    },
+    {
+      "id": 18,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 379,
+      "unit": "lux",
+      "timestamp": "2026-10-02T09:30:00.000Z"
+    },
+    {
+      "id": 19,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 27.5,
+      "unit": "°C",
+      "timestamp": "2026-10-02T09:48:00.000Z"
+    },
+    {
+      "id": 20,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 57.7,
+      "unit": "%",
+      "timestamp": "2026-10-02T09:48:00.000Z"
+    },
+    {
+      "id": 21,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 383,
+      "unit": "lux",
+      "timestamp": "2026-10-02T09:48:00.000Z"
+    },
+    {
+      "id": 22,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 27.2,
+      "unit": "°C",
+      "timestamp": "2026-10-02T10:06:00.000Z"
+    },
+    {
+      "id": 23,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 58.1,
+      "unit": "%",
+      "timestamp": "2026-10-02T10:06:00.000Z"
+    },
+    {
+      "id": 24,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 386,
+      "unit": "lux",
+      "timestamp": "2026-10-02T10:06:00.000Z"
+    },
+    {
+      "id": 25,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 27,
+      "unit": "°C",
+      "timestamp": "2026-10-02T10:24:00.000Z"
+    },
+    {
+      "id": 26,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 58.6,
+      "unit": "%",
+      "timestamp": "2026-10-02T10:24:00.000Z"
+    },
+    {
+      "id": 27,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 390,
+      "unit": "lux",
+      "timestamp": "2026-10-02T10:24:00.000Z"
+    },
+    {
+      "id": 28,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.8,
+      "unit": "°C",
+      "timestamp": "2026-10-02T10:42:00.000Z"
+    },
+    {
+      "id": 29,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 59,
+      "unit": "%",
+      "timestamp": "2026-10-02T10:42:00.000Z"
+    },
+    {
+      "id": 30,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 394,
+      "unit": "lux",
+      "timestamp": "2026-10-02T10:42:00.000Z"
+    },
+    {
+      "id": 31,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.6,
+      "unit": "°C",
+      "timestamp": "2026-10-02T11:00:00.000Z"
+    },
+    {
+      "id": 32,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 59.5,
+      "unit": "%",
+      "timestamp": "2026-10-02T11:00:00.000Z"
+    },
+    {
+      "id": 33,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 398,
+      "unit": "lux",
+      "timestamp": "2026-10-02T11:00:00.000Z"
+    },
+    {
+      "id": 34,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.3,
+      "unit": "°C",
+      "timestamp": "2026-10-02T11:18:00.000Z"
+    },
+    {
+      "id": 35,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60,
+      "unit": "%",
+      "timestamp": "2026-10-02T11:18:00.000Z"
+    },
+    {
+      "id": 36,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 401,
+      "unit": "lux",
+      "timestamp": "2026-10-02T11:18:00.000Z"
+    },
+    {
+      "id": 37,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.1,
+      "unit": "°C",
+      "timestamp": "2026-10-02T11:36:00.000Z"
+    },
+    {
+      "id": 38,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.4,
+      "unit": "%",
+      "timestamp": "2026-10-02T11:36:00.000Z"
+    },
+    {
+      "id": 39,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 405,
+      "unit": "lux",
+      "timestamp": "2026-10-02T11:36:00.000Z"
+    },
+    {
+      "id": 40,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 25.9,
+      "unit": "°C",
+      "timestamp": "2026-10-02T11:54:00.000Z"
+    },
+    {
+      "id": 41,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.9,
+      "unit": "%",
+      "timestamp": "2026-10-02T11:54:00.000Z"
+    },
+    {
+      "id": 42,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 409,
+      "unit": "lux",
+      "timestamp": "2026-10-02T11:54:00.000Z"
+    },
+    {
+      "id": 43,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26,
+      "unit": "°C",
+      "timestamp": "2026-10-02T12:12:00.000Z"
+    },
+    {
+      "id": 44,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.9,
+      "unit": "%",
+      "timestamp": "2026-10-02T12:12:00.000Z"
+    },
+    {
+      "id": 45,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 409,
+      "unit": "lux",
+      "timestamp": "2026-10-02T12:12:00.000Z"
+    },
+    {
+      "id": 46,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.2,
+      "unit": "°C",
+      "timestamp": "2026-10-02T12:30:00.000Z"
+    },
+    {
+      "id": 47,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.6,
+      "unit": "%",
+      "timestamp": "2026-10-02T12:30:00.000Z"
+    },
+    {
+      "id": 48,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 408,
+      "unit": "lux",
+      "timestamp": "2026-10-02T12:30:00.000Z"
+    },
+    {
+      "id": 49,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.5,
+      "unit": "°C",
+      "timestamp": "2026-10-02T12:48:00.000Z"
+    },
+    {
+      "id": 50,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.4,
+      "unit": "%",
+      "timestamp": "2026-10-02T12:48:00.000Z"
+    },
+    {
+      "id": 51,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 406,
+      "unit": "lux",
+      "timestamp": "2026-10-02T12:48:00.000Z"
+    },
+    {
+      "id": 52,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.7,
+      "unit": "°C",
+      "timestamp": "2026-10-02T13:06:00.000Z"
+    },
+    {
+      "id": 53,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.2,
+      "unit": "%",
+      "timestamp": "2026-10-02T13:06:00.000Z"
+    },
+    {
+      "id": 54,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 405,
+      "unit": "lux",
+      "timestamp": "2026-10-02T13:06:00.000Z"
+    },
+    {
+      "id": 55,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 27,
+      "unit": "°C",
+      "timestamp": "2026-10-02T13:24:00.000Z"
+    },
+    {
+      "id": 56,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 59.9,
+      "unit": "%",
+      "timestamp": "2026-10-02T13:24:00.000Z"
+    },
+    {
+      "id": 57,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 403,
+      "unit": "lux",
+      "timestamp": "2026-10-02T13:24:00.000Z"
+    },
+    {
+      "id": 58,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 27.2,
+      "unit": "°C",
+      "timestamp": "2026-10-02T13:42:00.000Z"
+    },
+    {
+      "id": 59,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 59.7,
+      "unit": "%",
+      "timestamp": "2026-10-02T13:42:00.000Z"
+    },
+    {
+      "id": 60,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 402,
+      "unit": "lux",
+      "timestamp": "2026-10-02T13:42:00.000Z"
+    },
+    {
+      "id": 61,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 27.5,
+      "unit": "°C",
+      "timestamp": "2026-10-02T14:00:00.000Z"
+    },
+    {
+      "id": 62,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 59.5,
+      "unit": "%",
+      "timestamp": "2026-10-02T14:00:00.000Z"
+    },
+    {
+      "id": 63,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 400,
+      "unit": "lux",
+      "timestamp": "2026-10-02T14:00:00.000Z"
+    },
+    {
+      "id": 64,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 27.8,
+      "unit": "°C",
+      "timestamp": "2026-10-02T14:18:00.000Z"
+    },
+    {
+      "id": 65,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 59.3,
+      "unit": "%",
+      "timestamp": "2026-10-02T14:18:00.000Z"
+    },
+    {
+      "id": 66,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 399,
+      "unit": "lux",
+      "timestamp": "2026-10-02T14:18:00.000Z"
+    },
+    {
+      "id": 67,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28,
+      "unit": "°C",
+      "timestamp": "2026-10-02T14:36:00.000Z"
+    },
+    {
+      "id": 68,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 59,
+      "unit": "%",
+      "timestamp": "2026-10-02T14:36:00.000Z"
+    },
+    {
+      "id": 69,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 397,
+      "unit": "lux",
+      "timestamp": "2026-10-02T14:36:00.000Z"
+    },
+    {
+      "id": 70,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.3,
+      "unit": "°C",
+      "timestamp": "2026-10-02T14:54:00.000Z"
+    },
+    {
+      "id": 71,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 58.8,
+      "unit": "%",
+      "timestamp": "2026-10-02T14:54:00.000Z"
+    },
+    {
+      "id": 72,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 396,
+      "unit": "lux",
+      "timestamp": "2026-10-02T14:54:00.000Z"
+    },
+    {
+      "id": 73,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.5,
+      "unit": "°C",
+      "timestamp": "2026-10-02T15:12:00.000Z"
+    },
+    {
+      "id": 74,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 58.6,
+      "unit": "%",
+      "timestamp": "2026-10-02T15:12:00.000Z"
+    },
+    {
+      "id": 75,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 394,
+      "unit": "lux",
+      "timestamp": "2026-10-02T15:12:00.000Z"
+    },
+    {
+      "id": 76,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.8,
+      "unit": "°C",
+      "timestamp": "2026-10-02T15:30:00.000Z"
+    },
+    {
+      "id": 77,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 58.4,
+      "unit": "%",
+      "timestamp": "2026-10-02T15:30:00.000Z"
+    },
+    {
+      "id": 78,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 393,
+      "unit": "lux",
+      "timestamp": "2026-10-02T15:30:00.000Z"
+    },
+    {
+      "id": 79,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 29,
+      "unit": "°C",
+      "timestamp": "2026-10-02T15:48:00.000Z"
+    },
+    {
+      "id": 80,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 58.1,
+      "unit": "%",
+      "timestamp": "2026-10-02T15:48:00.000Z"
+    },
+    {
+      "id": 81,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 391,
+      "unit": "lux",
+      "timestamp": "2026-10-02T15:48:00.000Z"
+    },
+    {
+      "id": 82,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 29.2,
+      "unit": "°C",
+      "timestamp": "2026-10-02T16:06:00.000Z"
+    },
+    {
+      "id": 83,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 58.2,
+      "unit": "%",
+      "timestamp": "2026-10-02T16:06:00.000Z"
+    },
+    {
+      "id": 84,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 393,
+      "unit": "lux",
+      "timestamp": "2026-10-02T16:06:00.000Z"
+    },
+    {
+      "id": 85,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 29.1,
+      "unit": "°C",
+      "timestamp": "2026-10-02T16:24:00.000Z"
+    },
+    {
+      "id": 86,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 58.6,
+      "unit": "%",
+      "timestamp": "2026-10-02T16:24:00.000Z"
+    },
+    {
+      "id": 87,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 403,
+      "unit": "lux",
+      "timestamp": "2026-10-02T16:24:00.000Z"
+    },
+    {
+      "id": 88,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 29,
+      "unit": "°C",
+      "timestamp": "2026-10-02T16:42:00.000Z"
+    },
+    {
+      "id": 89,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 59,
+      "unit": "%",
+      "timestamp": "2026-10-02T16:42:00.000Z"
+    },
+    {
+      "id": 90,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 413,
+      "unit": "lux",
+      "timestamp": "2026-10-02T16:42:00.000Z"
+    },
+    {
+      "id": 91,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.9,
+      "unit": "°C",
+      "timestamp": "2026-10-02T17:00:00.000Z"
+    },
+    {
+      "id": 92,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 59.5,
+      "unit": "%",
+      "timestamp": "2026-10-02T17:00:00.000Z"
+    },
+    {
+      "id": 93,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 423,
+      "unit": "lux",
+      "timestamp": "2026-10-02T17:00:00.000Z"
+    },
+    {
+      "id": 94,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.8,
+      "unit": "°C",
+      "timestamp": "2026-10-02T17:18:00.000Z"
+    },
+    {
+      "id": 95,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60,
+      "unit": "%",
+      "timestamp": "2026-10-02T17:18:00.000Z"
+    },
+    {
+      "id": 96,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 432,
+      "unit": "lux",
+      "timestamp": "2026-10-02T17:18:00.000Z"
+    },
+    {
+      "id": 97,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.7,
+      "unit": "°C",
+      "timestamp": "2026-10-02T17:36:00.000Z"
+    },
+    {
+      "id": 98,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.4,
+      "unit": "%",
+      "timestamp": "2026-10-02T17:36:00.000Z"
+    },
+    {
+      "id": 99,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 442,
+      "unit": "lux",
+      "timestamp": "2026-10-02T17:36:00.000Z"
+    },
+    {
+      "id": 100,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.6,
+      "unit": "°C",
+      "timestamp": "2026-10-02T17:54:00.000Z"
+    },
+    {
+      "id": 101,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.8,
+      "unit": "%",
+      "timestamp": "2026-10-02T17:54:00.000Z"
+    },
+    {
+      "id": 102,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 452,
+      "unit": "lux",
+      "timestamp": "2026-10-02T17:54:00.000Z"
+    },
+    {
+      "id": 103,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.5,
+      "unit": "°C",
+      "timestamp": "2026-10-02T18:12:00.000Z"
+    },
+    {
+      "id": 104,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 61.3,
+      "unit": "%",
+      "timestamp": "2026-10-02T18:12:00.000Z"
+    },
+    {
+      "id": 105,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 461,
+      "unit": "lux",
+      "timestamp": "2026-10-02T18:12:00.000Z"
+    },
+    {
+      "id": 106,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.4,
+      "unit": "°C",
+      "timestamp": "2026-10-02T18:30:00.000Z"
+    },
+    {
+      "id": 107,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 61.8,
+      "unit": "%",
+      "timestamp": "2026-10-02T18:30:00.000Z"
+    },
+    {
+      "id": 108,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 471,
+      "unit": "lux",
+      "timestamp": "2026-10-02T18:30:00.000Z"
+    },
+    {
+      "id": 109,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.4,
+      "unit": "°C",
+      "timestamp": "2026-10-02T18:48:00.000Z"
+    },
+    {
+      "id": 110,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 62.2,
+      "unit": "%",
+      "timestamp": "2026-10-02T18:48:00.000Z"
+    },
+    {
+      "id": 111,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 481,
+      "unit": "lux",
+      "timestamp": "2026-10-02T18:48:00.000Z"
+    },
+    {
+      "id": 112,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.3,
+      "unit": "°C",
+      "timestamp": "2026-10-02T19:06:00.000Z"
+    },
+    {
+      "id": 113,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 62.7,
+      "unit": "%",
+      "timestamp": "2026-10-02T19:06:00.000Z"
+    },
+    {
+      "id": 114,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 491,
+      "unit": "lux",
+      "timestamp": "2026-10-02T19:06:00.000Z"
+    },
+    {
+      "id": 115,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.2,
+      "unit": "°C",
+      "timestamp": "2026-10-02T19:24:00.000Z"
+    },
+    {
+      "id": 116,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 63.1,
+      "unit": "%",
+      "timestamp": "2026-10-02T19:24:00.000Z"
+    },
+    {
+      "id": 117,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 501,
+      "unit": "lux",
+      "timestamp": "2026-10-02T19:24:00.000Z"
+    },
+    {
+      "id": 118,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28.1,
+      "unit": "°C",
+      "timestamp": "2026-10-02T19:42:00.000Z"
+    },
+    {
+      "id": 119,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 63.5,
+      "unit": "%",
+      "timestamp": "2026-10-02T19:42:00.000Z"
+    },
+    {
+      "id": 120,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 510,
+      "unit": "lux",
+      "timestamp": "2026-10-02T19:42:00.000Z"
+    },
+    {
+      "id": 121,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 28,
+      "unit": "°C",
+      "timestamp": "2026-10-02T20:00:00.000Z"
+    },
+    {
+      "id": 122,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 64,
+      "unit": "%",
+      "timestamp": "2026-10-02T20:00:00.000Z"
+    },
+    {
+      "id": 123,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 520,
+      "unit": "lux",
+      "timestamp": "2026-10-02T20:00:00.000Z"
+    },
+    {
+      "id": 124,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 27.8,
+      "unit": "°C",
+      "timestamp": "2026-10-02T20:18:00.000Z"
+    },
+    {
+      "id": 125,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 63.4,
+      "unit": "%",
+      "timestamp": "2026-10-02T20:18:00.000Z"
+    },
+    {
+      "id": 126,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 515,
+      "unit": "lux",
+      "timestamp": "2026-10-02T20:18:00.000Z"
+    },
+    {
+      "id": 127,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 27.5,
+      "unit": "°C",
+      "timestamp": "2026-10-02T20:36:00.000Z"
+    },
+    {
+      "id": 128,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 62.8,
+      "unit": "%",
+      "timestamp": "2026-10-02T20:36:00.000Z"
+    },
+    {
+      "id": 129,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 510,
+      "unit": "lux",
+      "timestamp": "2026-10-02T20:36:00.000Z"
+    },
+    {
+      "id": 130,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 27.3,
+      "unit": "°C",
+      "timestamp": "2026-10-02T20:54:00.000Z"
+    },
+    {
+      "id": 131,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 62.2,
+      "unit": "%",
+      "timestamp": "2026-10-02T20:54:00.000Z"
+    },
+    {
+      "id": 132,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 504,
+      "unit": "lux",
+      "timestamp": "2026-10-02T20:54:00.000Z"
+    },
+    {
+      "id": 133,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 27,
+      "unit": "°C",
+      "timestamp": "2026-10-02T21:12:00.000Z"
+    },
+    {
+      "id": 134,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 61.6,
+      "unit": "%",
+      "timestamp": "2026-10-02T21:12:00.000Z"
+    },
+    {
+      "id": 135,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 499,
+      "unit": "lux",
+      "timestamp": "2026-10-02T21:12:00.000Z"
+    },
+    {
+      "id": 136,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.8,
+      "unit": "°C",
+      "timestamp": "2026-10-02T21:30:00.000Z"
+    },
+    {
+      "id": 137,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 61,
+      "unit": "%",
+      "timestamp": "2026-10-02T21:30:00.000Z"
+    },
+    {
+      "id": 138,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 494,
+      "unit": "lux",
+      "timestamp": "2026-10-02T21:30:00.000Z"
+    },
+    {
+      "id": 139,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.6,
+      "unit": "°C",
+      "timestamp": "2026-10-02T21:48:00.000Z"
+    },
+    {
+      "id": 140,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.4,
+      "unit": "%",
+      "timestamp": "2026-10-02T21:48:00.000Z"
+    },
+    {
+      "id": 141,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 489,
+      "unit": "lux",
+      "timestamp": "2026-10-02T21:48:00.000Z"
+    },
+    {
+      "id": 142,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.3,
+      "unit": "°C",
+      "timestamp": "2026-10-02T22:06:00.000Z"
+    },
+    {
+      "id": 143,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 59.8,
+      "unit": "%",
+      "timestamp": "2026-10-02T22:06:00.000Z"
+    },
+    {
+      "id": 144,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 483,
+      "unit": "lux",
+      "timestamp": "2026-10-02T22:06:00.000Z"
+    },
+    {
+      "id": 145,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.1,
+      "unit": "°C",
+      "timestamp": "2026-10-02T22:24:00.000Z"
+    },
+    {
+      "id": 146,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 59.2,
+      "unit": "%",
+      "timestamp": "2026-10-02T22:24:00.000Z"
+    },
+    {
+      "id": 147,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 478,
+      "unit": "lux",
+      "timestamp": "2026-10-02T22:24:00.000Z"
+    },
+    {
+      "id": 148,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 25.8,
+      "unit": "°C",
+      "timestamp": "2026-10-02T22:42:00.000Z"
+    },
+    {
+      "id": 149,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 58.6,
+      "unit": "%",
+      "timestamp": "2026-10-02T22:42:00.000Z"
+    },
+    {
+      "id": 150,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 473,
+      "unit": "lux",
+      "timestamp": "2026-10-02T22:42:00.000Z"
+    },
+    {
+      "id": 151,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 25.6,
+      "unit": "°C",
+      "timestamp": "2026-10-02T23:00:00.000Z"
+    },
+    {
+      "id": 152,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 58,
+      "unit": "%",
+      "timestamp": "2026-10-02T23:00:00.000Z"
+    },
+    {
+      "id": 153,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 468,
+      "unit": "lux",
+      "timestamp": "2026-10-02T23:00:00.000Z"
+    },
+    {
+      "id": 154,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 25.4,
+      "unit": "°C",
+      "timestamp": "2026-10-02T23:18:00.000Z"
+    },
+    {
+      "id": 155,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 57.4,
+      "unit": "%",
+      "timestamp": "2026-10-02T23:18:00.000Z"
+    },
+    {
+      "id": 156,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 462,
+      "unit": "lux",
+      "timestamp": "2026-10-02T23:18:00.000Z"
+    },
+    {
+      "id": 157,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 25.1,
+      "unit": "°C",
+      "timestamp": "2026-10-02T23:36:00.000Z"
+    },
+    {
+      "id": 158,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 56.8,
+      "unit": "%",
+      "timestamp": "2026-10-02T23:36:00.000Z"
+    },
+    {
+      "id": 159,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 457,
+      "unit": "lux",
+      "timestamp": "2026-10-02T23:36:00.000Z"
+    },
+    {
+      "id": 160,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 24.9,
+      "unit": "°C",
+      "timestamp": "2026-10-02T23:54:00.000Z"
+    },
+    {
+      "id": 161,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 56.2,
+      "unit": "%",
+      "timestamp": "2026-10-02T23:54:00.000Z"
+    },
+    {
+      "id": 162,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 452,
+      "unit": "lux",
+      "timestamp": "2026-10-02T23:54:00.000Z"
+    },
+    {
+      "id": 163,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 24.9,
+      "unit": "°C",
+      "timestamp": "2026-10-03T00:12:00.000Z"
+    },
+    {
+      "id": 164,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 56.2,
+      "unit": "%",
+      "timestamp": "2026-10-03T00:12:00.000Z"
+    },
+    {
+      "id": 165,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 453,
+      "unit": "lux",
+      "timestamp": "2026-10-03T00:12:00.000Z"
+    },
+    {
+      "id": 166,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.1,
+      "unit": "°C",
+      "timestamp": "2026-10-03T02:18:00.000Z"
+    },
+    {
+      "id": 167,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 58.3,
+      "unit": "%",
+      "timestamp": "2026-10-03T02:18:00.000Z"
+    },
+    {
+      "id": 168,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 479,
+      "unit": "lux",
+      "timestamp": "2026-10-03T02:18:00.000Z"
+    },
+    {
+      "id": 169,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 25.1,
+      "unit": "°C",
+      "timestamp": "2026-10-03T00:30:00.000Z"
+    },
+    {
+      "id": 170,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 56.5,
+      "unit": "%",
+      "timestamp": "2026-10-03T00:30:00.000Z"
+    },
+    {
+      "id": 171,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 456,
+      "unit": "lux",
+      "timestamp": "2026-10-03T00:30:00.000Z"
+    },
+    {
+      "id": 172,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 25.3,
+      "unit": "°C",
+      "timestamp": "2026-10-03T00:48:00.000Z"
+    },
+    {
+      "id": 173,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 56.8,
+      "unit": "%",
+      "timestamp": "2026-10-03T00:48:00.000Z"
+    },
+    {
+      "id": 174,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 460,
+      "unit": "lux",
+      "timestamp": "2026-10-03T00:48:00.000Z"
+    },
+    {
+      "id": 175,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 25.4,
+      "unit": "°C",
+      "timestamp": "2026-10-03T01:06:00.000Z"
+    },
+    {
+      "id": 176,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 57.1,
+      "unit": "%",
+      "timestamp": "2026-10-03T01:06:00.000Z"
+    },
+    {
+      "id": 177,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 464,
+      "unit": "lux",
+      "timestamp": "2026-10-03T01:06:00.000Z"
+    },
+    {
+      "id": 178,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 25.6,
+      "unit": "°C",
+      "timestamp": "2026-10-03T01:24:00.000Z"
+    },
+    {
+      "id": 179,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 57.4,
+      "unit": "%",
+      "timestamp": "2026-10-03T01:24:00.000Z"
+    },
+    {
+      "id": 180,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 468,
+      "unit": "lux",
+      "timestamp": "2026-10-03T01:24:00.000Z"
+    },
+    {
+      "id": 181,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 25.8,
+      "unit": "°C",
+      "timestamp": "2026-10-03T01:42:00.000Z"
+    },
+    {
+      "id": 182,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 57.7,
+      "unit": "%",
+      "timestamp": "2026-10-03T01:42:00.000Z"
+    },
+    {
+      "id": 183,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 471,
+      "unit": "lux",
+      "timestamp": "2026-10-03T01:42:00.000Z"
+    },
+    {
+      "id": 184,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26,
+      "unit": "°C",
+      "timestamp": "2026-10-03T02:00:00.000Z"
+    },
+    {
+      "id": 185,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 58,
+      "unit": "%",
+      "timestamp": "2026-10-03T02:00:00.000Z"
+    },
+    {
+      "id": 186,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 475,
+      "unit": "lux",
+      "timestamp": "2026-10-03T02:00:00.000Z"
+    },
+    {
+      "id": 187,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.3,
+      "unit": "°C",
+      "timestamp": "2026-10-03T02:36:00.000Z"
+    },
+    {
+      "id": 188,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 58.6,
+      "unit": "%",
+      "timestamp": "2026-10-03T02:36:00.000Z"
+    },
+    {
+      "id": 189,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 483,
+      "unit": "lux",
+      "timestamp": "2026-10-03T02:36:00.000Z"
+    },
+    {
+      "id": 190,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.5,
+      "unit": "°C",
+      "timestamp": "2026-10-03T02:54:00.000Z"
+    },
+    {
+      "id": 191,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 58.9,
+      "unit": "%",
+      "timestamp": "2026-10-03T02:54:00.000Z"
+    },
+    {
+      "id": 192,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 486,
+      "unit": "lux",
+      "timestamp": "2026-10-03T02:54:00.000Z"
+    },
+    {
+      "id": 193,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.6,
+      "unit": "°C",
+      "timestamp": "2026-10-03T03:12:00.000Z"
+    },
+    {
+      "id": 194,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 59.2,
+      "unit": "%",
+      "timestamp": "2026-10-03T03:12:00.000Z"
+    },
+    {
+      "id": 195,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 490,
+      "unit": "lux",
+      "timestamp": "2026-10-03T03:12:00.000Z"
+    },
+    {
+      "id": 196,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.8,
+      "unit": "°C",
+      "timestamp": "2026-10-03T03:30:00.000Z"
+    },
+    {
+      "id": 197,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 59.5,
+      "unit": "%",
+      "timestamp": "2026-10-03T03:30:00.000Z"
+    },
+    {
+      "id": 198,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 494,
+      "unit": "lux",
+      "timestamp": "2026-10-03T03:30:00.000Z"
+    },
+    {
+      "id": 199,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 27,
+      "unit": "°C",
+      "timestamp": "2026-10-03T03:48:00.000Z"
+    },
+    {
+      "id": 200,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 59.8,
+      "unit": "%",
+      "timestamp": "2026-10-03T03:48:00.000Z"
+    },
+    {
+      "id": 201,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 498,
+      "unit": "lux",
+      "timestamp": "2026-10-03T03:48:00.000Z"
+    },
+    {
+      "id": 202,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 27.1,
+      "unit": "°C",
+      "timestamp": "2026-10-03T04:06:00.000Z"
+    },
+    {
+      "id": 203,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60,
+      "unit": "%",
+      "timestamp": "2026-10-03T04:06:00.000Z"
+    },
+    {
+      "id": 204,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 499,
+      "unit": "lux",
+      "timestamp": "2026-10-03T04:06:00.000Z"
+    },
+    {
+      "id": 205,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.9,
+      "unit": "°C",
+      "timestamp": "2026-10-03T04:24:00.000Z"
+    },
+    {
+      "id": 206,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.1,
+      "unit": "%",
+      "timestamp": "2026-10-03T04:24:00.000Z"
+    },
+    {
+      "id": 207,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 497,
+      "unit": "lux",
+      "timestamp": "2026-10-03T04:24:00.000Z"
+    },
+    {
+      "id": 208,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.8,
+      "unit": "°C",
+      "timestamp": "2026-10-03T04:42:00.000Z"
+    },
+    {
+      "id": 209,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.2,
+      "unit": "%",
+      "timestamp": "2026-10-03T04:42:00.000Z"
+    },
+    {
+      "id": 210,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 495,
+      "unit": "lux",
+      "timestamp": "2026-10-03T04:42:00.000Z"
+    },
+    {
+      "id": 211,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.7,
+      "unit": "°C",
+      "timestamp": "2026-10-03T05:00:00.000Z"
+    },
+    {
+      "id": 212,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.3,
+      "unit": "%",
+      "timestamp": "2026-10-03T05:00:00.000Z"
+    },
+    {
+      "id": 213,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 493,
+      "unit": "lux",
+      "timestamp": "2026-10-03T05:00:00.000Z"
+    },
+    {
+      "id": 214,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.5,
+      "unit": "°C",
+      "timestamp": "2026-10-03T05:18:00.000Z"
+    },
+    {
+      "id": 215,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.4,
+      "unit": "%",
+      "timestamp": "2026-10-03T05:18:00.000Z"
+    },
+    {
+      "id": 216,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 491,
+      "unit": "lux",
+      "timestamp": "2026-10-03T05:18:00.000Z"
+    },
+    {
+      "id": 217,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.4,
+      "unit": "°C",
+      "timestamp": "2026-10-03T05:36:00.000Z"
+    },
+    {
+      "id": 218,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.5,
+      "unit": "%",
+      "timestamp": "2026-10-03T05:36:00.000Z"
+    },
+    {
+      "id": 219,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 489,
+      "unit": "lux",
+      "timestamp": "2026-10-03T05:36:00.000Z"
+    },
+    {
+      "id": 220,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.3,
+      "unit": "°C",
+      "timestamp": "2026-10-03T05:54:00.000Z"
+    },
+    {
+      "id": 221,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.6,
+      "unit": "%",
+      "timestamp": "2026-10-03T05:54:00.000Z"
+    },
+    {
+      "id": 222,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 487,
+      "unit": "lux",
+      "timestamp": "2026-10-03T05:54:00.000Z"
+    },
+    {
+      "id": 223,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26.2,
+      "unit": "°C",
+      "timestamp": "2026-10-03T06:12:00.000Z"
+    },
+    {
+      "id": 224,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.7,
+      "unit": "%",
+      "timestamp": "2026-10-03T06:12:00.000Z"
+    },
+    {
+      "id": 225,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 485,
+      "unit": "lux",
+      "timestamp": "2026-10-03T06:12:00.000Z"
+    },
+    {
+      "id": 226,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 26,
+      "unit": "°C",
+      "timestamp": "2026-10-03T06:30:00.000Z"
+    },
+    {
+      "id": 227,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.8,
+      "unit": "%",
+      "timestamp": "2026-10-03T06:30:00.000Z"
+    },
+    {
+      "id": 228,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 483,
+      "unit": "lux",
+      "timestamp": "2026-10-03T06:30:00.000Z"
+    },
+    {
+      "id": 229,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 25.9,
+      "unit": "°C",
+      "timestamp": "2026-10-03T06:48:00.000Z"
+    },
+    {
+      "id": 230,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.8,
+      "unit": "%",
+      "timestamp": "2026-10-03T06:48:00.000Z"
+    },
+    {
+      "id": 231,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 480,
+      "unit": "lux",
+      "timestamp": "2026-10-03T06:48:00.000Z"
+    },
+    {
+      "id": 232,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 25.8,
+      "unit": "°C",
+      "timestamp": "2026-10-03T07:06:00.000Z"
+    },
+    {
+      "id": 233,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 60.9,
+      "unit": "%",
+      "timestamp": "2026-10-03T07:06:00.000Z"
+    },
+    {
+      "id": 234,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 478,
+      "unit": "lux",
+      "timestamp": "2026-10-03T07:06:00.000Z"
+    },
+    {
+      "id": 235,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 25.7,
+      "unit": "°C",
+      "timestamp": "2026-10-03T07:24:00.000Z"
+    },
+    {
+      "id": 236,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 61,
+      "unit": "%",
+      "timestamp": "2026-10-03T07:24:00.000Z"
+    },
+    {
+      "id": 237,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 476,
+      "unit": "lux",
+      "timestamp": "2026-10-03T07:24:00.000Z"
+    },
+    {
+      "id": 238,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 24.2,
+      "unit": "°C",
+      "timestamp": "2026-10-03T07:42:00.000Z"
+    },
+    {
+      "id": 239,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 62,
+      "unit": "%",
+      "timestamp": "2026-10-03T07:42:00.000Z"
+    },
+    {
+      "id": 240,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 427,
+      "unit": "lux",
+      "timestamp": "2026-10-03T07:42:00.000Z"
+    },
+    {
+      "id": 241,
+      "sensorId": 1,
+      "sensorType": "temperature",
+      "value": 25.4,
+      "unit": "°C",
+      "timestamp": "2026-10-03T08:00:00.000Z"
+    },
+    {
+      "id": 242,
+      "sensorId": 2,
+      "sensorType": "humidity",
+      "value": 61.2,
+      "unit": "%",
+      "timestamp": "2026-10-03T08:00:00.000Z"
+    },
+    {
+      "id": 243,
+      "sensorId": 3,
+      "sensorType": "light",
+      "value": 472,
+      "unit": "lux",
+      "timestamp": "2026-10-03T08:00:00.000Z"
+    }
+  ],
+  "devices": [
+    {
+      "id": 1,
+      "name": "System Fan",
+      "currentStatus": "on",
+      "connectionStatus": "online",
+      "pendingActionId": null
+    },
+    {
+      "id": 2,
+      "name": "Emergency Light",
+      "currentStatus": "off",
+      "connectionStatus": "offline",
+      "pendingActionId": null
+    }
+  ],
+  "actions": [
+    {
+      "id": 1,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 1,
+      "deviceName": "System Fan",
+      "action": "OFF",
+      "status": "off",
+      "source": "manual",
+      "createdAt": "2026-10-02T23:00:00.000Z",
+      "completedAt": "2026-10-02T23:00:00.700Z"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 2,
+      "deviceName": "Emergency Light",
+      "action": "ON",
+      "status": "on",
+      "source": "manual",
+      "createdAt": "2026-10-02T23:30:00.000Z",
+      "completedAt": "2026-10-02T23:30:00.700Z"
+    },
+    {
+      "id": 3,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 1,
+      "deviceName": "System Fan",
+      "action": "ON",
+      "status": "on",
+      "source": "manual",
+      "createdAt": "2026-10-03T00:00:00.000Z",
+      "completedAt": "2026-10-03T00:00:00.700Z"
+    },
+    {
+      "id": 4,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 2,
+      "deviceName": "Emergency Light",
+      "action": "OFF",
+      "status": "off",
+      "source": "manual",
+      "createdAt": "2026-10-03T00:30:00.000Z",
+      "completedAt": "2026-10-03T00:30:00.700Z"
+    },
+    {
+      "id": 5,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 1,
+      "deviceName": "System Fan",
+      "action": "ON",
+      "status": "on",
+      "source": "manual",
+      "createdAt": "2026-10-03T01:00:00.000Z",
+      "completedAt": "2026-10-03T01:00:00.700Z"
+    },
+    {
+      "id": 6,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 2,
+      "deviceName": "Emergency Light",
+      "action": "ON",
+      "status": "on",
+      "source": "manual",
+      "createdAt": "2026-10-03T01:30:00.000Z",
+      "completedAt": "2026-10-03T01:30:00.700Z"
+    },
+    {
+      "id": 7,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 1,
+      "deviceName": "System Fan",
+      "action": "OFF",
+      "status": "off",
+      "source": "manual",
+      "createdAt": "2026-10-03T02:00:00.000Z",
+      "completedAt": "2026-10-03T02:00:00.700Z"
+    },
+    {
+      "id": 8,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 2,
+      "deviceName": "Emergency Light",
+      "action": "ON",
+      "status": "on",
+      "source": "manual",
+      "createdAt": "2026-10-03T02:30:00.000Z",
+      "completedAt": "2026-10-03T02:30:00.700Z"
+    },
+    {
+      "id": 9,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 1,
+      "deviceName": "System Fan",
+      "action": "ON",
+      "status": "on",
+      "source": "manual",
+      "createdAt": "2026-10-03T03:00:00.000Z",
+      "completedAt": "2026-10-03T03:00:00.700Z"
+    },
+    {
+      "id": 10,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 2,
+      "deviceName": "Emergency Light",
+      "action": "OFF",
+      "status": "off",
+      "source": "manual",
+      "createdAt": "2026-10-03T03:30:00.000Z",
+      "completedAt": "2026-10-03T03:30:00.700Z"
+    },
+    {
+      "id": 11,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 1,
+      "deviceName": "System Fan",
+      "action": "ON",
+      "status": "on",
+      "source": "manual",
+      "createdAt": "2026-10-03T04:00:00.000Z",
+      "completedAt": "2026-10-03T04:00:00.700Z"
+    },
+    {
+      "id": 12,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 2,
+      "deviceName": "Emergency Light",
+      "action": "ON",
+      "status": "on",
+      "source": "manual",
+      "createdAt": "2026-10-03T04:30:00.000Z",
+      "completedAt": "2026-10-03T04:30:00.700Z"
+    },
+    {
+      "id": 13,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 1,
+      "deviceName": "System Fan",
+      "action": "OFF",
+      "status": "off",
+      "source": "manual",
+      "createdAt": "2026-10-03T05:00:00.000Z",
+      "completedAt": "2026-10-03T05:00:00.700Z"
+    },
+    {
+      "id": 14,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 2,
+      "deviceName": "Emergency Light",
+      "action": "ON",
+      "status": "on",
+      "source": "manual",
+      "createdAt": "2026-10-03T05:30:00.000Z",
+      "completedAt": "2026-10-03T05:30:00.700Z"
+    },
+    {
+      "id": 15,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 1,
+      "deviceName": "System Fan",
+      "action": "ON",
+      "status": "on",
+      "source": "manual",
+      "createdAt": "2026-10-03T06:00:00.000Z",
+      "completedAt": "2026-10-03T06:00:00.700Z"
+    },
+    {
+      "id": 16,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 2,
+      "deviceName": "Emergency Light",
+      "action": "OFF",
+      "status": "off",
+      "source": "manual",
+      "createdAt": "2026-10-03T06:30:00.000Z",
+      "completedAt": "2026-10-03T06:30:00.700Z"
+    },
+    {
+      "id": 17,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 1,
+      "deviceName": "System Fan",
+      "action": "ON",
+      "status": "on",
+      "source": "manual",
+      "createdAt": "2026-10-03T07:00:00.000Z",
+      "completedAt": "2026-10-03T07:00:00.700Z"
+    },
+    {
+      "id": 18,
+      "userId": 1,
+      "userName": "Lê Xuân Cường",
+      "deviceId": 2,
+      "deviceName": "Emergency Light",
+      "action": "OFF",
+      "status": "off",
+      "source": "manual",
+      "createdAt": "2026-10-03T07:30:00.000Z",
+      "completedAt": "2026-10-03T07:30:00.700Z"
+    }
+  ]
+}

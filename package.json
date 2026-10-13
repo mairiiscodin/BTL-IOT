@@ -1,0 +1,33 @@
+{
+  "name": "smart-room",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "format": "npm --prefix frontend run format",
+    "format:check": "npm --prefix frontend run format:check",
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "preview": "npm --prefix frontend run preview",
+    "backend": "npm run start --workspace backend",
+    "broker": "node scripts/broker.mjs",
+    "simulator": "node scripts/simulator.mjs",
+    "start:local": "node scripts/local.mjs",
+    "db:init": "npm run db:init --workspace backend",
+    "format:backend": "prettier --write backend",
+    "format:check:backend": "prettier --check backend",
+    "format:scripts": "prettier --write scripts",
+    "format:check:scripts": "prettier --check scripts"
+  },
+  "devDependencies": {
+    "aedes": "^1.1.2",
+    "mqtt": "^5.15.2",
+    "prettier": "3.9.8"
+  },
+  "workspaces": [
+    "backend"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  }
+}

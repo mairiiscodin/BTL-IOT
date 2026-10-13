@@ -1,0 +1,22 @@
+{
+  "name": "smart-room-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "db:init": "node scripts/initDb.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "express": "^5.1.0",
+    "luxon": "^3.7.2",
+    "mqtt": "^5.15.2",
+    "mysql2": "^3.24.4",
+    "ws": "^8.18.3"
+  }
+}
