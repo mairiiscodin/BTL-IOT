@@ -1,0 +1,536 @@
+{
+  "info": {
+    "name": "Smart Room API",
+    "description": "14 API của backend Smart Room (1-14, tài khoản admin) + 15-18 kiểm tra phân quyền viewer. Điền biến password và viewerPassword (tài khoản trong backend/database/init.sql) rồi Run collection. Backend: http://127.0.0.1:8080.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8080/api/v1"
+    },
+    {
+      "key": "username",
+      "value": "admin@iot.com"
+    },
+    {
+      "key": "password",
+      "value": ""
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "deviceId",
+      "value": "1"
+    },
+    {
+      "key": "actionId",
+      "value": ""
+    },
+    {
+      "key": "viewerUsername",
+      "value": "viewer@iot.com"
+    },
+    {
+      "key": "viewerPassword",
+      "value": ""
+    },
+    {
+      "key": "viewerToken",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "1. POST /auth/login -Đăng nhập",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "const j = pm.response.json();",
+              "pm.test('Có token', () => pm.expect(j.data.token).to.be.a('string').and.not.empty);",
+              "pm.test('Role admin', () => pm.expect(j.data.user.role).to.eql('admin'));",
+              "pm.collectionVariables.set('token', j.data.token);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/auth/login",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "2. GET /auth/me -Thông tin người dùng",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Đúng user', () => pm.expect(pm.response.json().data.username).to.eql(pm.variables.get('username')));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/auth/me",
+        "header": []
+      }
+    },
+    {
+      "name": "3. GET /system -Trạng thái hệ thống",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "const d = pm.response.json().data;",
+              "pm.test('DB kết nối', () => pm.expect(d.databaseConnected).to.eql(true));",
+              "pm.test('MQTT kết nối', () => pm.expect(d.mqttConnected).to.eql(true));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/system",
+        "header": []
+      }
+    },
+    {
+      "name": "4. GET /sensors -Danh sách cảm biến",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('data là mảng', () => pm.expect(pm.response.json().data).to.be.an('array'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/sensors",
+        "header": []
+      }
+    },
+    {
+      "name": "5. GET /sensors/latest -Số đo mới nhất",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('data là mảng', () => pm.expect(pm.response.json().data).to.be.an('array'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/sensors/latest",
+        "header": []
+      }
+    },
+    {
+      "name": "6. GET /sensors/data -Lịch sử cảm biến",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Có data[] và pagination', () => {",
+              "  const j = pm.response.json();",
+              "  pm.expect(j.data).to.be.an('array');",
+              "  pm.expect(j.pagination).to.be.an('object');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/sensors/data?type=temperature&page=1&limit=10",
+        "header": []
+      }
+    },
+    {
+      "name": "7. GET /sensors/chart -Dữ liệu biểu đồ",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/sensors/chart?range=24H",
+        "header": []
+      }
+    },
+    {
+      "name": "8. GET /sensors/export -Xuất CSV cảm biến",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Trả về file CSV', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('text/csv'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/sensors/export?type=temperature",
+        "header": []
+      }
+    },
+    {
+      "name": "9. GET /devices -Danh sách thiết bị",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('data là mảng', () => pm.expect(pm.response.json().data).to.be.an('array'));",
+              "const list = pm.response.json().data;",
+              "if (list.length) pm.collectionVariables.set('deviceId', String(list[0].id));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/devices",
+        "header": []
+      }
+    },
+    {
+      "name": "10. POST /devices/:id/actions -Bật/tắt thiết bị",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 202', () => pm.response.to.have.status(202));",
+              "const d = pm.response.json().data;",
+              "pm.test('Lệnh đang chờ ACK', () => pm.expect(d.status).to.eql('loading'));",
+              "pm.collectionVariables.set('actionId', d.actionId.replace(/^A/, ''));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/devices/{{deviceId}}/actions",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"action\": \"ON\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "11. GET /actions -Lịch sử điều khiển",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Có data[] và pagination', () => {",
+              "  const j = pm.response.json();",
+              "  pm.expect(j.data).to.be.an('array');",
+              "  pm.expect(j.pagination).to.be.an('object');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/actions?deviceId={{deviceId}}&page=1&limit=10",
+        "header": []
+      }
+    },
+    {
+      "name": "12. GET /actions/:id -Chi tiết một lệnh",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('ESP32 đã ACK', () => pm.expect(pm.response.json().data.status).to.be.oneOf(['on', 'off']));"
+            ]
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Chờ ESP32 gửi ACK cho lệnh ở bước 10.",
+              "setTimeout(() => {}, 2500);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/actions/{{actionId}}",
+        "header": []
+      }
+    },
+    {
+      "name": "13. GET /actions/export -Xuất CSV lịch sử điều khiển",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Trả về file CSV', () => pm.expect(pm.response.headers.get('Content-Type')).to.include('text/csv'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/actions/export?deviceId={{deviceId}}",
+        "header": []
+      }
+    },
+    {
+      "name": "14. POST /auth/logout -Đăng xuất",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('Đã đăng xuất', () => pm.expect(pm.response.json().data.loggedOut).to.eql(true));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/auth/logout",
+        "header": []
+      }
+    },
+    {
+      "name": "15. POST /auth/login -Đăng nhập viewer",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "const j = pm.response.json();",
+              "pm.test('Role viewer', () => pm.expect(j.data.user.role).to.eql('viewer'));",
+              "pm.collectionVariables.set('viewerToken', j.data.token);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/auth/login",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "auth": {
+          "type": "noauth"
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"{{viewerUsername}}\",\n  \"password\": \"{{viewerPassword}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "16. GET /devices -Viewer xem thiết bị",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));",
+              "pm.test('data là mảng', () => pm.expect(pm.response.json().data).to.be.an('array'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/devices",
+        "header": [],
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{viewerToken}}",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "17. POST /devices/:id/actions -Viewer bật/tắt thiết bị (bị chặn 403)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 403', () => pm.response.to.have.status(403));",
+              "pm.test('Error code FORBIDDEN', () => pm.expect(pm.response.json().error.code).to.eql('FORBIDDEN'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/devices/{{deviceId}}/actions",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{viewerToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"action\": \"ON\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "18. POST /auth/logout -Đăng xuất viewer",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/auth/logout",
+        "header": [],
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{viewerToken}}",
+              "type": "string"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

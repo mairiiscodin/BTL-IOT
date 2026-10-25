@@ -1,9 +1,11 @@
+// Route cảm biến, gắn tại /api/v1/sensors (đã yêu cầu đăng nhập, xem app.js).
 import { Router } from 'express';
-import * as c from '../controllers/sensorController.js';
+import * as controller from '../controllers/sensorController.js';
+
 const router = Router();
-router.get('/', c.sensors);
-router.get('/latest', c.realtime);
-router.get('/data', c.history);
-router.get('/chart', c.chart);
-router.get('/export', c.exportCsv);
+router.get('/', controller.listSensors);
+router.get('/latest', controller.latest);
+router.get('/data', controller.history);
+router.get('/chart', controller.chart);
+router.get('/export', controller.exportCsv);
 export default router;

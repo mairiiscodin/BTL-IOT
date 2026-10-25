@@ -1,39 +1,88 @@
 import React, { useState } from 'react';
 import { queryString } from '../api/client';
-import { Header, Table, ErrorBox, Icon, useData, sensorLabels, date } from '../components';
-// Cau hinh icon tuong ung voi tung loai cam bien.
-const icons = { temperature: 'imgThermometer', humidity: 'imgDroplet', light: 'imgSun' };
+import { Header, Table, ErrorBox, Icon, CopyTime } from '../components';
+import { useData } from '../hooks/useData';
+import { formatDateTime } from '../utils/dateTime';
+import { SENSORS } from '../data/sensors';
+
+// Định dạng mốc thời gian hợp lệ: 'YYYY-MM-DD', thêm ' HH', ':mm', ':ss' tuỳ độ chính xác muốn tìm.
+const TIME_PATTERN = /^\d{4}-\d{2}-\d{2}(?: \d{2}(?::\d{2}(?::\d{2})?)?)?$/;
+
+// Cấu hình các cột của bảng số đo.
+const COLUMNS = [
+  { key: 'id', label: 'ID', render: (row) => `S${row.id}` },
+  {
+    key: 'sensorType',
+    label: 'Sensor Type',
+    render: (row) => (
+      <span className="sensor-cell">
+        <Icon name={SENSORS[row.sensorType]?.icon} group="2_208" />
+        {SENSORS[row.sensorType]?.label}
+      </span>
+    ),
+  },
+  { key: 'value', label: 'Value', render: (row) => <strong>{row.value}</strong> },
+  { key: 'unit', label: 'Unit' },
+  {
+    key: 'timestamp',
+    label: 'Timestamp',
+    render: (row) => {
+      const time = formatDateTime(row.timestamp);
+      return <CopyTime value={time}>{time}</CopyTime>;
+    },
+  },
+];
+
+/**
+ * Trang tra cứu số đo cảm biến.
+ * Ô "Filter by" chọn loại cảm biến (lọc theo giá trị tối đa) hoặc "Time" (lọc theo mốc thời gian).
+ */
 export function SensorPage() {
-  // Quan ly bo loc, khoang ngay, trang hien tai va so dong moi trang.
+  const [filter, setFilter] = useState({}); // bộ lọc đang áp dụng, gửi lên API
+  const [filterBy, setFilterBy] = useState(''); // '' | 'temperature' | 'humidity' | 'light' | 'time'
+  const [timeQuery, setTimeQuery] = useState('');
+  const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const [filter, setFilter] = useState({}),
-    [page, setPage] = useState(1);
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setToDate] = useState('');
-  // Tai so do theo bo loc va phan trang; useData quan ly ket qua, loi va trang thai tai.
+
   const { result, error, loading } = useData(
     `/sensors/data?${queryString({ ...filter, page, limit })}`,
   );
-  // Kiem tra form, doi khoang ngay sang mui gio +07:00 va ap dung bo loc tu trang dau.
+
+  const isTime = filterBy === 'time';
+
+  // Đọc toàn bộ form và áp dụng bộ lọc mới (gọi mỗi khi người dùng gõ/chọn).
   function applyFilters(form) {
-    if (!form.checkValidity()) return;
-    const { fromDate: from, toDate: to, ...values } = Object.fromEntries(new FormData(form));
-    if (from && to && from > to) return;
+    if (!form.checkValidity()) return; // vd. ô số đang chứa chữ
+    const {
+      filterBy: selected,
+      timeQuery: time,
+      ...values
+    } = Object.fromEntries(new FormData(form));
+    // Đang gõ dở mốc thời gian => chờ gõ xong mới lọc.
+    if (selected === 'time' && time && !TIME_PATTERN.test(time)) return;
     setPage(1);
     setFilter({
-      ...values,
-      from: from ? `${from}T00:00:00+07:00` : '',
-      to: to ? `${to}T23:59:59.999+07:00` : '',
+      ...values, // valueMax (khi lọc theo cảm biến)
+      type: selected === 'time' ? '' : selected,
+      time: selected === 'time' ? time : '',
     });
   }
+
+  function resetFilters() {
+    setTimeQuery('');
+    setFilterBy('');
+    setFilter({});
+    setPage(1);
+  }
+
   return (
     <>
-      {/* Hien thi tieu de trang tra cuu so do. */}
       <Header
         title="Sensor Query & Logs"
         subtitle="Search historical log files and export environmental metrics"
       />
-      {/* Loc theo ngay, loai cam bien va gia tri toi da; thay doi form de loc, Reset de xoa bo loc. */}
+
+      {/* onChange đặt ở <form> => mọi ô bên trong thay đổi đều gọi applyFilters. */}
       <form
         className="card filters sensor-filters"
         onChange={(event) => applyFilters(event.currentTarget)}
@@ -41,100 +90,74 @@ export function SensorPage() {
           event.preventDefault();
           applyFilters(event.currentTarget);
         }}
-        onReset={() => {
-          setFromDate('');
-          setToDate('');
-          setFilter({});
-          setPage(1);
-        }}
+        onReset={resetFilters}
       >
         <label>
-          From Date
-          <div className="input-icon">
-            <input
-              name="fromDate"
-              type="date"
-              aria-label="From Date"
-              value={fromDate}
-              max={toDate || undefined}
-              onChange={(event) => setFromDate(event.target.value)}
-            />
-          </div>
-        </label>
-        <label>
-          To Date
-          <div className="input-icon">
-            <input
-              name="toDate"
-              type="date"
-              aria-label="To Date"
-              value={toDate}
-              min={fromDate || undefined}
-              onChange={(event) => setToDate(event.target.value)}
-            />
-          </div>
-        </label>
-        <label>
-          Sensor Type
+          Filter by
           <div className="input-icon">
             <Icon name="imgThermometer" group="2_208" />
-            <select name="type">
-              <option value="">All Sensors</option>
-              {Object.entries(sensorLabels).map(([key, label]) => (
+            <select
+              name="filterBy"
+              value={filterBy}
+              onChange={(event) => setFilterBy(event.target.value)}
+            >
+              <option value="">All data</option>
+              {Object.entries(SENSORS).map(([key, sensor]) => (
                 <option key={key} value={key}>
-                  {label}
+                  {sensor.label}
                 </option>
               ))}
+              <option value="time">Time</option>
             </select>
           </div>
         </label>
+
+        {/* Ô thứ hai đổi vai trò theo "Filter by": nhập mốc thời gian hoặc giá trị tối đa. */}
         <label>
-          Value Limit
+          {isTime ? 'Time' : 'Value'}
           <div className="input-icon">
-            <Icon name="imgChartColumn1" group="2_208" />
-            <input
-              name="valueMax"
-              type="number"
-              step="any"
-              placeholder="No limits"
-              aria-label="Maximum sensor value"
+            <Icon
+              name={isTime ? 'imgSearch' : 'imgChartColumn1'}
+              group={isTime ? '2_348' : '2_208'}
             />
+            {isTime ? (
+              <input
+                key="time"
+                name="timeQuery"
+                type="text"
+                placeholder="YYYY-MM-DD HH:mm:ss"
+                aria-label="Search sensor time"
+                value={timeQuery}
+                onChange={(event) => setTimeQuery(event.target.value)}
+              />
+            ) : (
+              <input
+                key="value"
+                name="valueMax"
+                type="number"
+                step="any"
+                placeholder="Any value"
+                aria-label="Maximum sensor value"
+              />
+            )}
           </div>
         </label>
-        <button className="primary">
-          <Icon name="imgSearch" group="2_208" />
-          Search
-        </button>
+
         <button type="reset">Reset</button>
       </form>
-      {/* Hien thi loi va bang so do; ho tro chuyen trang, doi so dong va dinh dang cac cot. */}
+
       <ErrorBox message={error} />
       <Table
         rows={result?.data || []}
+        columns={COLUMNS}
         pagination={result?.pagination}
+        loading={loading}
         onPage={setPage}
         pageSize={limit}
         onPageSizeChange={(size) => {
           setLimit(size);
           setPage(1);
         }}
-        loading={loading}
-        columns={[
-          { key: 'id', label: 'ID', render: (row) => `S${row.id}` },
-          {
-            key: 'sensorType',
-            label: 'Sensor Type',
-            render: (row) => (
-              <span className="sensor-cell">
-                <Icon name={icons[row.sensorType]} group="2_208" />
-                {sensorLabels[row.sensorType]}
-              </span>
-            ),
-          },
-          { key: 'value', label: 'Value', render: (row) => <strong>{row.value}</strong> },
-          { key: 'unit', label: 'Unit' },
-          { key: 'timestamp', label: 'Timestamp', render: (row) => date(row.timestamp) },
-        ]}
       />
     </>
   );

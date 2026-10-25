@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "db:init": "node scripts/initDb.js"
+    "db:check": "node scripts/checkDb.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

@@ -8,9 +8,9 @@ Frontend React/Vite độc lập trong frontend/. Chạy npm install rồi npm r
 - Action History: tìm kiếm, phân trang, xuất CSV.
 - Profile: thông tin sinh viên và tài liệu dự án.
 
-Dữ liệu mẫu nằm ở frontend/public/data/demo.json. Thao tác được giữ trong bộ nhớ, tải lại trang khôi phục mẫu. Bật/tắt mô phỏng mất 700 ms và cập nhật lịch sử.
+Frontend không còn dữ liệu mẫu; mọi số đo, thiết bị và lịch sử đến từ backend.
 
-App quản lý phiên đăng nhập, điều hướng hash và trạng thái cảm biến/thiết bị. api/client.js chọn JSON mặc định hoặc backend khi VITE_DATA_SOURCE=api. api/socket.js chọn sự kiện demo hoặc WebSocket thật. useData xử lý tải dữ liệu và hủy request khi đổi trang/bộ lọc.
+App quản lý phiên đăng nhập, điều hướng hash và trạng thái cảm biến/thiết bị. api/client.js gọi REST backend kèm Bearer token. api/socket.js nhận sự kiện qua WebSocket /ws. useData xử lý tải dữ liệu và hủy request khi đổi trang/bộ lọc.
 
 Thiết kế: https://www.figma.com/design/ERAHhh6o3aYMh0dwXZelj1/LeXuanCuong-B23DCCN111-IOT
 

@@ -42,11 +42,11 @@ Chưa kiểm chứng trên ESP32 vật lý; integration/browser dùng simulator 
 | public/ | frontend/public/ |
 | vite.config.js, index.html | frontend/vite.config.js, frontend/index.html |
 | backend/src/main/java/... | backend/routes/, controllers/, services/, config/, realtime/ |
-| backend/src/main/resources/db/migration/V1__smart_room.sql | backend/database/schema.sql |
+| backend/src/main/resources/db/migration/V1__smart_room.sql | backend/database/init.sql |
 | mvn package, java -jar | npm run backend (Node.js) |
 
 ENV_FILE tương đối được giải từ BTL để chạy npm workspace backend không lệch đường dẫn; file chỉ định không tồn tại sẽ báo lỗi rõ ràng.
 
 ## Frontend JSON độc lập
 
-Frontend đã tách khỏi npm workspaces và có package-lock.json, dependency, cấu hình riêng. Mặc định dùng public/data/demo.json; lớp demo mô phỏng thao tác trong bộ nhớ, reload khôi phục mẫu. API thật được chọn bằng VITE_DATA_SOURCE=api. Các kiểm tra JSON-only đã qua: login, biểu đồ, lọc, CSV, điều khiển mô phỏng, sự kiện, CRUD cấu hình và Scene; không gọi backend.
+Frontend đã tách khỏi npm workspaces và có package-lock.json, dependency, cấu hình riêng. Lớp dữ liệu demo (JSON mẫu) đã bị gỡ; frontend chỉ dùng backend thật.

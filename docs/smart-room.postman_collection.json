@@ -1,233 +1,273 @@
 {
   "info": {
     "name": "IoT Smart Room — B23DCCN111",
+    "description": "Chạy 'Login admin' trước: token tự lưu vào biến {{token}} và mọi request kế thừa Bearer token từ collection.\nFolder '4. Kiểm tra phân quyền' có sẵn test tự động: bấm chuột phải folder -> Run folder để xem Pass/Fail.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
-    {
-      "key": "baseUrl",
-      "value": "http://localhost:8080/api/v1"
-    },
-    {
-      "key": "username",
-      "value": "admin@iot.com"
-    },
-    {
-      "key": "password",
-      "value": ""
-    },
-    {
-      "key": "token",
-      "value": ""
-    },
-    {
-      "key": "actionId",
-      "value": "A1"
-    },
-    {
-      "key": "sceneId",
-      "value": "1"
-    }
+    { "key": "baseUrl", "value": "http://localhost:8080/api/v1" },
+    { "key": "username", "value": "admin@iot.com" },
+    { "key": "password", "value": "admin123" },
+    { "key": "viewerUsername", "value": "viewer@iot.com" },
+    { "key": "viewerPassword", "value": "viewer123" },
+    { "key": "token", "value": "" },
+    { "key": "viewerToken", "value": "" },
+    { "key": "actionId", "value": "A1" }
   ],
   "auth": {
     "type": "bearer",
-    "bearer": [
-      {
-        "key": "token",
-        "value": "{{token}}",
-        "type": "string"
-      }
-    ]
+    "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
   },
   "item": [
     {
-      "name": "Login",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": "{{baseUrl}}/auth/login",
-        "auth": {
-          "type": "noauth"
+      "name": "1. Auth",
+      "item": [
+        {
+          "name": "Login admin",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/login",
+            "auth": { "type": "noauth" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Đăng nhập thành công (200)', () => pm.response.to.have.status(200));",
+                  "if (pm.response.code === 200) {",
+                  "  const { token, user } = pm.response.json().data;",
+                  "  pm.collectionVariables.set('token', token);",
+                  "  pm.test('Role là admin', () => pm.expect(user.role).to.eql('admin'));",
+                  "  console.log('Đã lưu token admin:', token);",
+                  "}"
+                ]
+              }
+            }
+          ]
         },
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}"
-        }
-      },
-      "event": [
         {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "if (pm.response.code === 200) pm.collectionVariables.set('token', pm.response.json().data.token);"
-            ]
-          }
+          "name": "Current user",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/auth/me" }
+        },
+        {
+          "name": "Logout",
+          "request": { "method": "POST", "header": [], "url": "{{baseUrl}}/auth/logout" }
         }
       ]
     },
     {
-      "name": "Current user",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": "{{baseUrl}}/auth/me"
-      }
-    },
-    {
-      "name": "System health",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": "{{baseUrl}}/system"
-      }
-    },
-    {
-      "name": "Latest sensors",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": "{{baseUrl}}/sensors/latest"
-      }
-    },
-    {
-      "name": "Sensor history",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": "{{baseUrl}}/sensors/data?type=temperature&page=1&limit=20"
-      }
-    },
-    {
-      "name": "Historical chart",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": "{{baseUrl}}/sensors/chart?range=24H"
-      }
-    },
-    {
-      "name": "Devices",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": "{{baseUrl}}/devices"
-      }
-    },
-    {
-      "name": "Fan ON",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": "{{baseUrl}}/devices/1/actions",
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"action\": \"ON\"\n}"
-        }
-      },
-      "event": [
+      "name": "2. Sensors",
+      "item": [
         {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "if (pm.response.code === 202) pm.collectionVariables.set('actionId', pm.response.json().data.actionId);"
-            ]
+          "name": "System health",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/system" }
+        },
+        {
+          "name": "Latest sensors",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/sensors/latest" }
+        },
+        {
+          "name": "Sensor history",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/sensors/data?type=temperature&page=1&limit=20"
           }
+        },
+        {
+          "name": "Historical chart",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/sensors/chart?range=24H" }
         }
       ]
     },
     {
-      "name": "Command status",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": "{{baseUrl}}/actions/{{actionId}}"
-      }
+      "name": "3. Devices & Actions",
+      "item": [
+        {
+          "name": "Devices",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/devices" }
+        },
+        {
+          "name": "Fan ON",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/devices/1/actions",
+            "body": { "mode": "raw", "raw": "{\n  \"action\": \"ON\"\n}" }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 202) pm.collectionVariables.set('actionId', pm.response.json().data.actionId);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Command status",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/actions/{{actionId}}" }
+        },
+        {
+          "name": "Action history",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/actions?page=1&limit=20" }
+        },
+        {
+          "name": "Export actions",
+          "request": { "method": "GET", "header": [], "url": "{{baseUrl}}/actions/export" }
+        }
+      ]
     },
     {
-      "name": "Action history",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": "{{baseUrl}}/actions?page=1&limit=20"
-      }
-    },
-    {
-      "name": "Export actions",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": "{{baseUrl}}/actions/export"
-      }
-    },
-    {
-      "name": "Logout",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "url": "{{baseUrl}}/auth/logout"
-      }
+      "name": "4. Kiểm tra phân quyền",
+      "description": "Chạy theo thứ tự từ trên xuống (Run folder). Mỗi request có test tự kiểm tra mã HTTP mong đợi.",
+      "item": [
+        {
+          "name": "Không gửi token -> 401",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/devices",
+            "auth": { "type": "noauth" }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": ["pm.test('Thiếu token bị chặn (401)', () => pm.response.to.have.status(401));"]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Token sai -> 401",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/devices",
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "token-bia-dat", "type": "string" }]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": ["pm.test('Token sai bị chặn (401)', () => pm.response.to.have.status(401));"]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login viewer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/login",
+            "auth": { "type": "noauth" },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{viewerUsername}}\",\n  \"password\": \"{{viewerPassword}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Đăng nhập viewer thành công (200)', () => pm.response.to.have.status(200));",
+                  "if (pm.response.code === 200) {",
+                  "  const { token, user } = pm.response.json().data;",
+                  "  pm.collectionVariables.set('viewerToken', token);",
+                  "  pm.test('Role là viewer', () => pm.expect(user.role).to.eql('viewer'));",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Viewer xem thiết bị -> 200",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/devices",
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{viewerToken}}", "type": "string" }]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": ["pm.test('Viewer được xem (200)', () => pm.response.to.have.status(200));"]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Viewer bật quạt -> 403",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/devices/1/actions",
+            "auth": {
+              "type": "bearer",
+              "bearer": [{ "key": "token", "value": "{{viewerToken}}", "type": "string" }]
+            },
+            "body": { "mode": "raw", "raw": "{\n  \"action\": \"ON\"\n}" }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Viewer bị cấm điều khiển (403)', () => pm.response.to.have.status(403));",
+                  "pm.test('Mã lỗi FORBIDDEN', () => pm.expect(pm.response.json().error.code).to.eql('FORBIDDEN'));"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Admin bật quạt -> 202",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/devices/1/actions",
+            "body": { "mode": "raw", "raw": "{\n  \"action\": \"ON\"\n}" }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// 409 DEVICE_BUSY nghĩa là đã qua bước phân quyền nhưng quạt còn chờ ACK lệnh trước.",
+                  "pm.test('Admin được điều khiển (202, hoặc 409 nếu thiết bị đang bận)', () => pm.expect(pm.response.code).to.be.oneOf([202, 409]));"
+                ]
+              }
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -13,7 +13,7 @@
     "broker": "node scripts/broker.mjs",
     "simulator": "node scripts/simulator.mjs",
     "start:local": "node scripts/local.mjs",
-    "db:init": "npm run db:init --workspace backend",
+    "db:check": "npm run db:check --workspace backend",
     "format:backend": "prettier --write backend",
     "format:check:backend": "prettier --check backend",
     "format:scripts": "prettier --write scripts",

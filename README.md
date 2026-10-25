@@ -2,20 +2,6 @@
 
 Dự án được tổ chức theo [IOT_va_ung_dung](https://github.com/datnt-numenor/IOT_va_ung_dung/tree/19f88cf3e7413db3ba7ff87115aedcbecd74c8e8), tách frontend, backend và firmware. Backend đã chuyển từ Spring Boot sang **Node.js + Express + MySQL + MQTT + WebSocket**. Giữ API, giao diện UC01–UC06 và giao thức ESP32 hiện tại.
 
-## Chạy frontend riêng với JSON mẫu
-
-Frontend hiện chạy độc lập và mặc định dùng public/data/demo.json:
-
-~~~powershell
-cd frontend
-npm ci
-npm run dev
-~~~
-
-Đăng nhập **admin@iot.com / demo123**. Không cần khởi động backend, MySQL, MQTT hay start:local. Các thao tác được mô phỏng trong trình duyệt và reset khi tải lại trang. Xem [frontend/README.md](frontend/README.md).
-
-Các mục chạy hệ thống thật bên dưới chỉ dùng khi đặt VITE_DATA_SOURCE=api trong frontend/.env.
-
 ## Cấu trúc
 
 ~~~text
@@ -29,8 +15,8 @@ BTL/
       components/             # UI dùng chung và biểu đồ
       pages/                  # Login, Dashboard, DataSensor, ActionHistory, Profile, SmartCustom
       hooks/                  # useData
-      utils/                  # Định dạng ngày giờ
-      data/                   # Nhãn cảm biến
+      utils/                  # Định dạng ngày giờ, chữ
+      data/                   # Cấu hình hiển thị cảm biến (nhãn, icon, màu)
     public/                   # Assets và tài liệu tải từ giao diện
     .env.example
     package.json
@@ -38,15 +24,15 @@ BTL/
   backend/
     app.js                    # Express + middleware + routes
     server.js                 # HTTP, MQTT, WebSocket, timeout, shutdown
-    config/                   # Env và MySQL pool/transaction
+    config/                   # Env, hằng số dùng chung (constants.js), MySQL pool/transaction
     controllers/              # HTTP request/response
     routes/                   # Auth, sensor, device, history
     services/                 # Nghiệp vụ, MQTT, rule engine, query
     middleware/               # Xác thực, xử lý lỗi
     realtime/                 # WebSocket hub
     utils/                    # Validation, bộ lọc và lỗi HTTP
-    database/                 # schema.sql, create-database.sql
-    scripts/initDb.js         # Khởi tạo DB rỗng / tiếp nhận DB cũ
+    database/init.sql         # Tạo database + bảng + dữ liệu cấu hình (chạy tay)
+    scripts/checkDb.js        # Kiểm tra database trước khi chạy
     .env.example
     package.json
   firmware/SmartRoom/          # ESP32 DHT11 + BH1750, command/ACK
@@ -72,12 +58,12 @@ npm.cmd --prefix frontend ci
 Copy-Item .env.example .env
 ~~~
 
-Chỉ copy .env khi chưa có; giữ nguyên mật khẩu và dữ liệu cũ nếu đã cấu hình. Điền DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD, ADMIN_USERNAME, ADMIN_PASSWORD, MQTT_URL, MQTT_USERNAME, MQTT_PASSWORD. Backend đọc backend/.env trước, rồi .env ở BTL; biến môi trường tiến trình có ưu tiên cao nhất. ENV_FILE chỉ định riêng một file và được tính từ BTL (kể cả khi chạy trong backend).
+Chỉ copy .env khi chưa có; giữ nguyên mật khẩu và dữ liệu cũ nếu đã cấu hình. Điền DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD, MQTT_URL, MQTT_USERNAME, MQTT_PASSWORD. Backend đọc backend/.env trước, rồi .env ở BTL; biến môi trường tiến trình có ưu tiên cao nhất. ENV_FILE chỉ định riêng một file và được tính từ BTL (kể cả khi chạy trong backend).
 
-Tạo database/user bằng backend/database/create-database.sql, sửa mật khẩu placeholder trước khi chạy. Sau đó:
+Tạo database bằng cách chạy **backend/database/init.sql** trong MySQL (Workbench → Execute, hoặc mysql -u root -p < backend/database/init.sql). File tạo database smart_room, 5 bảng, 3 cảm biến, 2 thiết bị và tài khoản **admin@iot.com / admin123**. Backend không tự tạo bảng; thiếu bảng thì backend báo lỗi và dừng. Sau đó:
 
 ~~~powershell
-npm.cmd run db:init
+npm.cmd run db:check
 npm.cmd run broker
 ~~~
 
@@ -107,7 +93,7 @@ Lệnh dùng .runtime/local.env và MySQL data directory đã tạo trong .runti
 
 ### Kết nối ESP32 qua mạng LAN
 
-Lệnh npm run broker dùng broker kiểm thử chỉ nghe 127.0.0.1. Khi nối ESP32 thật, dùng Mosquitto cài trực tiếp trên máy với listener trên địa chỉ LAN, xác thực username/password và cổng trùng cấu hình MQTT của backend/firmware.
+Lệnh npm run broker nghe 0.0.0.0 (mọi card mạng) nên ESP32 cùng mạng Wi-Fi kết nối được, có xác thực username/password trong .env. Firmware đặt MQTT_HOST là IPv4 Wi-Fi của laptop (ipconfig) và MQTT_PORT trùng MQTT_PORT trong .env; Windows Firewall phải cho phép cổng này (inbound TCP).
 
 ### Simulator khi chưa nối ESP32
 
@@ -119,11 +105,8 @@ Nếu đang dùng start:local, đặt $env:ENV_FILE='.runtime/local.env' trướ
 
 ## Database và chuyển đổi Java → Node
 
-- Bản cài mới có 5 bảng: Users, Sensors, Devices, SensorData, ActionHistory. Database cũ được giữ nguyên dữ liệu và hash BCrypt.
-- Database rỗng được tạo từ backend/database/schema.sql và seed tài khoản/cấu hình mặc định; không seed số đo giả.
-- Database có đủ 5 bảng chính được dùng trực tiếp; các bảng cũ dư thừa được giữ nhưng không còn được ứng dụng sử dụng.
-- Database chỉ có một phần schema bị từ chối khởi động để tránh ghi đè. Kiểm tra và khôi phục schema trước khi chạy lại.
-- ADMIN_PASSWORD chỉ tạo tài khoản khi Users trống; không đổi mật khẩu tài khoản đã có.
+- 5 bảng: Users, Sensors, Devices, SensorData, ActionHistory, tạo bằng backend/database/init.sql (chạy lại an toàn, không xoá dữ liệu). Không seed số đo giả; SensorData chỉ có dữ liệu khi ESP32/simulator gửi qua MQTT.
+- Đổi mật khẩu admin: tạo hash BCrypt mới (hướng dẫn trong init.sql) rồi UPDATE Users.
 - DB_URL dạng JDBC không còn dùng; kiểm tra DB_HOST/PORT/NAME/USER/PASSWORD đúng database trước khi chạy.
 - Phiên đăng nhập nằm trong RAM, hết hạn sau SESSION_HOURS (mặc định 8 giờ); restart backend cần đăng nhập lại.
 
@@ -139,9 +122,9 @@ Giao diện theo Figma gồm Login, Dashboard, Data Sensor, Action History và P
 
 ## Firmware
 
-Dùng firmware/SmartRoom/SmartRoom.ino. Copy config.example.h thành config.h và điền Wi-Fi/MQTT. Arduino libraries: PubSubClient, ArduinoJson 7, DHT sensor library, Adafruit Unified Sensor, BH1750.
+Dùng firmware/SmartRoom/SmartRoom.ino. Copy config.example.h thành config.h và điền Wi-Fi/MQTT (laptop chạy Mosquitto với ../mosquitto-local.conf, cổng 1111). Arduino libraries: PubSubClient, DHT sensor library, Adafruit Unified Sensor.
 
-DHT11 GPIO4; BH1750 SDA/SCL GPIO21/22; Fan GPIO25; Light GPIO26. LED cần điện trở; tải công suất cần mạch điều khiển phù hợp. Các sketch thử nghiệm ở ../firmware dùng giao thức cũ, không thay thế sketch SmartRoom có ACK actionId. Backend chỉ nhận ánh sáng theo lux, không coi ADC từ LDR là lux.
+DHT11 DATA GPIO14; cảm biến ánh sáng A0 GPIO34 (phải là chân ADC1); Device 1 (System Light) LED GPIO17; Device 2 (Emergency Light) LED GPIO18. Ánh sáng gửi lên là lux **ước lượng**: giá trị A0 quy đổi tuyến tính ra 0..LIGHT_MAX_LUX (chỉnh trong config.h).
 
 ## Build và định dạng mã
 

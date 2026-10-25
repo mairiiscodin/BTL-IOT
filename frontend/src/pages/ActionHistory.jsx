@@ -1,82 +1,133 @@
 import React, { useState } from 'react';
 import { download, queryString } from '../api/client';
-import { Header, Table, ErrorBox, Icon, useData, date } from '../components';
+import { Header, Table, ErrorBox, Icon, CopyTime } from '../components';
+import { useData } from '../hooks/useData';
+import { formatDateTime } from '../utils/dateTime';
+import { capitalize } from '../utils/format';
+
+const ACTION_STATUSES = ['loading', 'on', 'off', 'timeout', 'error'];
+
+/**
+ * Đổi chuỗi người dùng gõ 'dd-mm-yyyy hh:mm' sang dạng API cần 'yyyy-mm-dd hh:mm'.
+ * Chưa gõ xong hoặc ngày không tồn tại (vd. 31-02-2025) => trả về '' (chưa lọc).
+ */
+function parseTimeInput(text) {
+  const match = /^(\d{2})-(\d{2})-(\d{4}) (\d{2}):(\d{2})$/.exec(text);
+  if (!match) return '';
+  const [, dd, mm, yyyy, hh, min] = match;
+  // Tạo Date rồi so lại từng phần: nếu JS phải "tràn" sang ngày khác thì ngày nhập không hợp lệ.
+  const parsed = new Date(Number(yyyy), Number(mm) - 1, Number(dd), Number(hh), Number(min));
+  const valid =
+    parsed.getFullYear() === Number(yyyy) &&
+    parsed.getMonth() === Number(mm) - 1 &&
+    parsed.getDate() === Number(dd) &&
+    Number(hh) < 24 &&
+    Number(min) < 60;
+  return valid ? `${yyyy}-${mm}-${dd} ${hh}:${min}` : '';
+}
+
+// Cấu hình các cột của bảng lịch sử.
+const COLUMNS = [
+  { key: 'id', label: 'ID', render: (row) => `A${row.id}` },
+  { key: 'deviceName', label: 'Actuator Name' },
+  { key: 'userName', label: 'Người thực hiện' },
+  { key: 'action', label: 'Triggered Action', render: (row) => `TURN ${row.action}` },
+  {
+    key: 'status',
+    label: 'Status',
+    render: (row) => <span className={`badge ${row.status}`}>{capitalize(row.status)}</span>,
+  },
+  {
+    key: 'createdAt',
+    label: 'Execution Time',
+    render: (row) => {
+      const time = formatDateTime(row.createdAt);
+      return <CopyTime value={time}>{time}</CopyTime>;
+    },
+  },
+];
+
+/**
+ * Trang lịch sử bật/tắt thiết bị: lọc, phân trang và xuất CSV.
+ * @param revision tăng khi có sự kiện thiết bị mới => bảng tự tải lại
+ */
 export function HistoryPage({ revision }) {
-  // Quan ly tu khoa, bo loc, khoang thoi gian, phan trang va loi xuat CSV.
+  const [filters, setFilters] = useState({}); // { deviceId, action, status, time }
+  const [timeText, setTimeText] = useState(''); // nội dung ô Time đúng như người dùng gõ
+  const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const [q, setQuery] = useState(''),
-    [page, setPage] = useState(1),
-    [exportError, setExportError] = useState('');
-  const [filters, setFilters] = useState({});
-  const [timeRange, setTimeRange] = useState('');
-  const [fromDate, setFromDate] = useState('');
-  const [toDate, setToDate] = useState('');
-  // Lay nguoi dung hien tai de tao lua chon loc nguoi thuc hien.
-  const { result: userResult } = useData('/auth/me');
-  // Cap nhat mot bo loc, quay ve trang dau va xoa loi xuat CSV cu.
+  const [exportError, setExportError] = useState('');
+
+  // Danh sách thiết bị cho ô chọn "Actuator Name".
+  const { result: deviceResult } = useData('/devices');
+  // Dữ liệu bảng: tự tải lại khi đổi bộ lọc/trang hoặc khi revision tăng.
+  const { result, error, loading } = useData(
+    `/actions?${queryString({ ...filters, page, limit })}`,
+    revision,
+  );
+
+  // Đổi một bộ lọc => quay về trang 1.
   function updateFilter(key, value) {
     setFilters((current) => ({ ...current, [key]: value }));
     setPage(1);
     setExportError('');
   }
-  // Kiem tra khoang ngay va tao moc dau/cuoi ngay theo mui gio +07:00 de loc lich su.
-  function updateDateRange(from, to) {
-    if (from && to && from > to) return;
-    setFilters((current) => ({
-      ...current,
-      from: from ? `${from}T00:00:00+07:00` : '',
-      to: to ? `${to}T23:59:59.999+07:00` : '',
-    }));
+
+  // Gõ ô Time: luôn cập nhật chữ hiển thị, chỉ lọc khi gõ đủ và đúng định dạng.
+  function updateTime(text) {
+    setTimeText(text);
+    setFilters((current) => ({ ...current, time: parseTimeInput(text), from: '', to: '' }));
     setPage(1);
     setExportError('');
   }
-  // Tai lich su theo tu khoa, bo loc va phan trang; tai lai khi revision thay doi.
-  const { result, error, loading } = useData(
-    `/actions?${queryString({ q, ...filters, page, limit })}`,
-    revision,
-  );
+
+  function resetFilters() {
+    setFilters({});
+    setTimeText('');
+    setPage(1);
+    setExportError('');
+  }
+
+  // Xuất CSV theo bộ lọc hiện tại (không kèm page/limit để lấy hết).
+  function exportCsv() {
+    download(`/actions/export?${queryString(filters)}`).catch((e) => setExportError(e.message));
+  }
+
   return (
     <>
-      {/* Hien thi tieu de trang lich su dieu khien. */}
       <Header title="Actuator Command Logs" subtitle="View all device state changes" />
-      {/* Tim kiem lenh va tai CSV theo tu khoa, bo loc hien tai. */}
+
       <div className="row toolbar">
-        <div className="input-icon">
-          <Icon name="imgSearch" group="2_348" />
-          <input
-            aria-label="Search commands"
-            placeholder="Search commands..."
-            value={q}
-            onChange={(event) => {
-              setQuery(event.target.value);
-              setPage(1);
-            }}
-          />
-        </div>
-        <button
-          onClick={() =>
-            download(`/actions/export?${queryString({ q, ...filters })}`).catch((error) =>
-              setExportError(error.message),
-            )
-          }
-        >
+        <button onClick={exportCsv}>
           <Icon name="imgLogOut1" group="2_348" />
           Export CSV
         </button>
       </div>
-      {/* Loc theo nguoi thuc hien, lenh, trang thai va thoi gian; Reset xoa dieu kien tim kiem. */}
+
+      {/* Bộ lọc: áp dụng ngay khi gõ/chọn. */}
       <div className="card filters action-filters">
         <label>
-          Người thực hiện
+          Time
+          <input
+            aria-label="Thời gian"
+            placeholder="dd-mm-yyyy hh:mm"
+            value={timeText}
+            onChange={(event) => updateTime(event.target.value)}
+          />
+        </label>
+        <label>
+          Actuator Name
           <select
-            aria-label="Lọc người thực hiện"
-            value={filters.userId || ''}
-            onChange={(event) => updateFilter('userId', event.target.value)}
+            aria-label="Lọc tên thiết bị"
+            value={filters.deviceId || ''}
+            onChange={(event) => updateFilter('deviceId', event.target.value)}
           >
-            <option value="">Tất cả người thực hiện</option>
-            {userResult?.data && (
-              <option value={userResult.data.id}>{userResult.data.fullName}</option>
-            )}
+            <option value="">All device</option>
+            {(deviceResult?.data || []).map((device) => (
+              <option key={device.id} value={device.id}>
+                {device.name}
+              </option>
+            ))}
           </select>
         </label>
         <label>
@@ -99,121 +150,30 @@ export function HistoryPage({ revision }) {
             onChange={(event) => updateFilter('status', event.target.value)}
           >
             <option value="">All Statuses</option>
-            {['loading', 'on', 'off', 'timeout', 'error'].map((status) => (
+            {ACTION_STATUSES.map((status) => (
               <option key={status} value={status}>
-                {status.charAt(0).toUpperCase() + status.slice(1)}
+                {capitalize(status)}
               </option>
             ))}
           </select>
         </label>
-        <label>
-          Execution Time
-          <select
-            aria-label="Filter execution time"
-            value={timeRange}
-            onChange={(event) => {
-              // Chon khoang ngay tuy chinh hoac tinh khoang Today/7 ngay/30 ngay theo gio Viet Nam.
-              const value = event.target.value;
-              setTimeRange(value);
-              if (value === 'custom') {
-                updateDateRange(fromDate, toDate);
-                return;
-              }
-              const today = date(new Date()).slice(0, 10);
-              const start = new Date(`${today}T00:00:00+07:00`);
-              start.setTime(start.getTime() - (Number(value || 1) - 1) * 86400000);
-              setFilters((current) => ({
-                ...current,
-                from: value ? `${date(start).slice(0, 10)}T00:00:00+07:00` : '',
-                to: value ? `${today}T23:59:59.999+07:00` : '',
-              }));
-              setPage(1);
-              setExportError('');
-            }}
-          >
-            <option value="">All Time</option>
-            <option value="1">Today</option>
-            <option value="7">Last 7 Days</option>
-            <option value="30">Last 30 Days</option>
-            <option value="custom">Custom Date Range</option>
-          </select>
-        </label>
-        <button
-          type="button"
-          onClick={() => {
-            setFilters({});
-            setTimeRange('');
-            setFromDate('');
-            setToDate('');
-            setQuery('');
-            setPage(1);
-            setExportError('');
-          }}
-        >
+        <button type="button" onClick={resetFilters}>
           Reset
         </button>
-        {/* Hien thi hai o ngay khi chon khoang tuy chinh va ap dung khi ngay hop le. */}
-        {timeRange === 'custom' && (
-          <div className="action-date-range">
-            <label>
-              From Date
-              <input
-                type="date"
-                aria-label="Execution from date"
-                value={fromDate}
-                max={toDate || undefined}
-                onChange={(event) => {
-                  const value = event.target.value;
-                  setFromDate(value);
-                  if (event.target.validity.valid) updateDateRange(value, toDate);
-                }}
-              />
-            </label>
-            <label>
-              To Date
-              <input
-                type="date"
-                aria-label="Execution to date"
-                value={toDate}
-                min={fromDate || undefined}
-                onChange={(event) => {
-                  const value = event.target.value;
-                  setToDate(value);
-                  if (event.target.validity.valid) updateDateRange(fromDate, value);
-                }}
-              />
-            </label>
-          </div>
-        )}
       </div>
-      {/* Hien thi loi tai/xuat du lieu va bang lich su co phan trang, dinh dang trang thai va thoi gian. */}
+
       <ErrorBox message={error || exportError} />
       <Table
         rows={result?.data || []}
+        columns={COLUMNS}
         pagination={result?.pagination}
+        loading={loading}
         onPage={setPage}
         pageSize={limit}
         onPageSizeChange={(size) => {
           setLimit(size);
           setPage(1);
         }}
-        loading={loading}
-        columns={[
-          { key: 'id', label: 'ID', render: (row) => `A${row.id}` },
-          { key: 'deviceName', label: 'Actuator Name' },
-          { key: 'userName', label: 'Người thực hiện' },
-          { key: 'action', label: 'Triggered Action', render: (row) => `TURN ${row.action}` },
-          {
-            key: 'status',
-            label: 'Status',
-            render: (row) => (
-              <span className={`badge ${row.status}`}>
-                {row.status.charAt(0).toUpperCase() + row.status.slice(1)}
-              </span>
-            ),
-          },
-          { key: 'createdAt', label: 'Execution Time', render: (row) => date(row.createdAt) },
-        ]}
       />
     </>
   );

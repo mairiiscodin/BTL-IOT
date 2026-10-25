@@ -14,7 +14,7 @@ Base URL: `http://localhost:8080/api/v1`. Body JSON. Ngoài Login, gửi `Author
 
 Danh sách sensor/action có `pagination: {page,limit,total,totalPages}`, page từ 1, limit 1–200.
 
-Mã HTTP: 200 đọc/sửa/xóa, 202 tiếp nhận command, 400 validation, 401 auth, 404 không có resource hoặc không thuộc user, 409 conflict/device busy, 429 login rate limit, 500 lỗi nội bộ. MQTT gửi lỗi được ghi vào ActionHistory/status=error sau khi tiếp nhận 202.
+Mã HTTP: 200 đọc/sửa/xóa, 202 tiếp nhận command, 400 validation, 401 auth, 403 không đủ quyền (viewer gọi API chỉ dành cho admin), 404 không có resource hoặc không thuộc user, 409 conflict/device busy, 429 login rate limit, 500 lỗi nội bộ. MQTT gửi lỗi được ghi vào ActionHistory/status=error sau khi tiếp nhận 202.
 
 ## UC01: Auth
 
@@ -28,7 +28,7 @@ Mã HTTP: 200 đọc/sửa/xóa, 202 tiếp nhận command, 400 validation, 401 
 {"username":"admin@iot.com","password":"password-from-env"}
 ```
 
-Login trả `{success:true,data:{token,user}}`. Token phiên ngẫu nhiên, hết hạn 8 giờ; không phải JWT. Restart server xóa phiên trong RAM. Sai login trả 401; giới hạn 10 lần sai/phút/địa chỉ kết nối.
+Login trả `{success:true,data:{token,user}}`. Token phiên ngẫu nhiên, hết hạn 8 giờ; không phải JWT. Restart server xóa phiên trong RAM. Sai login trả 401; giới hạn 10 lần sai/phút/địa chỉ kết nối. `user.role` là `admin` (xem + điều khiển) hoặc `viewer` (chỉ xem); role lưu kèm phiên lúc đăng nhập, đổi role trong DB phải đăng nhập lại mới có hiệu lực.
 
 ## UC02, UC04: Sensors
 
@@ -37,7 +37,7 @@ Login trả `{success:true,data:{token,user}}`. Token phiên ngẫu nhiên, hế
 | GET | `/sensors` | Danh sách cảm biến khai báo |
 | GET | `/sensors/latest` | Ba giá trị cuối, null nếu chưa đo |
 | GET | `/sensors/data` | type, time, valueMin, valueMax, from, to, page, limit |
-| GET | `/sensors/chart` | range=1H/6H/24H/7D |
+| GET | `/sensors/chart` | 30 bản ghi gần nhất của mỗi cảm biến |
 | GET | `/sensors/export` | Bộ lọc như data, trả CSV |
 
 `type`: temperature/humidity/light. `time`: `2026-09-15`, `2026-09-15 14`, `2026-09-15 14:30`, hoặc `2026-09-15 14:30:12`, theo múi giờ ứng dụng. `from/to` nhận ISO-8601 có Z hoặc ngày giờ local. Dùng URL encoding cho dấu cách.
@@ -57,7 +57,7 @@ Latest có thêm `name`, `previousValue`; frontend tính xu hướng từ lần 
 | Method | Path | Chức năng |
 |---|---|---|
 | GET | `/devices` | currentStatus, connectionStatus, lastSeenAt, pendingActionId |
-| POST | `/devices/{id}/actions` | Gửi ON/OFF |
+| POST | `/devices/{id}/actions` | Gửi ON/OFF (chỉ role admin; viewer nhận 403 FORBIDDEN) |
 | GET | `/actions/{actionId}` | Chi tiết command của user |
 | GET | `/actions` | Lọc lịch sử của user |
 | GET | `/actions/export` | Xuất CSV cùng bộ lọc |

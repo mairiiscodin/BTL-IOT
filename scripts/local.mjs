@@ -1,16 +1,23 @@
+// =============================================================
+// Chạy toàn bộ hệ thống trên máy chỉ bằng 1 lệnh: npm run start:local
+// Lần lượt khởi động MySQL -> MQTT broker -> backend -> frontend (Vite).
+// Dịch vụ nào đã chạy sẵn (cổng đang mở) thì dùng lại. Log ghi vào .runtime/<tên>.log.
+// Simulator ESP32 chạy riêng: npm run simulator
+// =============================================================
 import fs from 'node:fs';
 import path from 'node:path';
 import net from 'node:net';
 import { spawn } from 'node:child_process';
 import { setTimeout as delay } from 'node:timers/promises';
 
-// Load local settings before importing the shared environment module.
+// Đặt ENV_FILE trước khi import env.js, để mọi tiến trình con đọc cấu hình .runtime/local.env.
 process.env.ENV_FILE ||= '.runtime/local.env';
 const { projectRoot, config } = await import('../backend/config/env.js');
 const runtimeDir = path.join(projectRoot, '.runtime');
-const children = new Set();
+const children = new Set(); // các tiến trình con do script này mở
 let stopping = false;
 
+// Thử kết nối TCP tới cổng: kết nối được => dịch vụ đã chạy.
 function isListening(port) {
   return new Promise((resolve) => {
     const socket = net.connect({ host: '127.0.0.1', port });
@@ -25,12 +32,17 @@ function isListening(port) {
   });
 }
 
+// Tắt các tiến trình con theo thứ tự ngược lúc mở (frontend trước, MySQL sau cùng).
 function stop() {
   if (stopping) return;
   stopping = true;
   for (const child of [...children].reverse()) child.kill();
 }
 
+/**
+ * Mở một dịch vụ và chờ tới khi cổng của nó sẵn sàng (tối đa 90 lần x 0,5 giây = 45 giây).
+ * Tiến trình con chết sớm => báo lỗi kèm đường dẫn file log.
+ */
 async function start({ name, port, command = process.execPath, args }) {
   if (await isListening(port)) {
     console.log(name + ' already listening at ' + port + '; reusing it.');
@@ -69,6 +81,7 @@ async function start({ name, port, command = process.execPath, args }) {
   throw new Error(name + ' startup interrupted or timed out; check ' + logPath);
 }
 
+// Danh sách dịch vụ, khởi động theo đúng thứ tự (backend cần MySQL + MQTT chạy trước).
 const mysqlBase = process.env.MYSQL_BASE || 'C:/Program Files/MySQL/MySQL Server 8.0';
 const frontendPort = Number(process.env.FRONTEND_PORT || 5173);
 const services = [
@@ -116,7 +129,7 @@ try {
       frontendPort +
       '. Simulator is started separately. Ctrl+C stops processes started here.',
   );
-  setInterval(() => {}, 1000);
+  setInterval(() => {}, 1000); // giữ script chạy để Ctrl+C tắt được các tiến trình con
 } catch (error) {
   console.error(error.message);
   stop();
